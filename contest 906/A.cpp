@@ -2,6 +2,7 @@
 using namespace std;
 #define ll long long
 #define mod 1000000007
+//Clue - only possible when possibility of making sums are two only
 void solve()
 {
     int n;
@@ -20,18 +21,16 @@ void solve()
         cout<<"YES"<<endl;
         return;
     }
-    for(auto it:m){
-        cout<<it.first<<" "<<it.second<<endl;
-    }
-    
-    if(abs((m.begin()->second)-(++(m.begin())->second))<=1){
+    auto it = m.begin();
+    int firstFreq = it->second;
+    it++;
+    int secondFreq = it->second;
+    if(abs(firstFreq-secondFreq)<=1){
         cout<<"YES"<<endl;
     }
     else{
         cout<<"NO"<<endl;
     }
-    
-
 
 }
 int main() {
