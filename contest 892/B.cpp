@@ -6,28 +6,27 @@ void solve()
 {
     int n;
     cin>>n;
-    
-        ll mini=1e9;
-        vector<ll> secondMin(n);
-    for(int i =0;i<n;i++){
-        int x;
-        cin>>x;
-        vector<ll> input(x);
-        for(int j =0;j<x;j++){
-            cin>>input[j];
-        }
-        sort(input.begin(),input.end());
-        mini = min(input[0],mini);
-        secondMin[i] = input[1];
+    ll mini=1e9;
+    vector<ll> secondMin(n);
+for(int i =0;i<n;i++){
+    int x;
+    cin>>x;
+    vector<ll> input(x);
+
+    for(int j =0;j<x;j++){
+        cin>>input[j];
     }
+
+    sort(input.begin(),input.end());
+    
+    mini = min(input[0],mini);
+    secondMin[i] = input[1];
+}
     //sometimes there is the problem in accumulate
     ll tot =0;
     for(int i =0;i<secondMin.size();i++) tot+=secondMin[i];
     ll total = tot-1ll*(*min_element(secondMin.begin(),secondMin.end()))+mini;
     cout<<total<<endl;
-
-
-
 }
 int main() {
 //     ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
