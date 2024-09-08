@@ -1,0 +1,3 @@
+Accessing static variable directly: 10
+Static variable: 10
+Accessing static variable via object: 10

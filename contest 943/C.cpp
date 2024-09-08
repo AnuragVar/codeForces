@@ -4,35 +4,23 @@ using namespace std;
 #define mod 1000000007
 void solve()
 {
-    int n,k;
-    cin>>n>>k;
-    vector<ll> a(n);
-    
-    for(int i =0;i<n;i++){
-       cin>>a[i];   
-    }
-    ll mine = a[k-1];
+    ll n;
+    cin>>n;
+    vector<int> x(n-1);
+
     int i=0;
-    while(i<n && a[i]<=mine){
-        i++;
+    while(i<n-1){
+    cin>>x[i];
+    i++;
     }
-    int ans1;
-    if(k<=i){
-        ans1=i-1;
-    }
-    else{
-    ans1 =i;
-    }
-    int maxi;
-    for(int i =1;i<a.size();i++){
-        if(a[i]>=a[k-1]) maxi = i;
-    }
-    swap(a[i],a[maxi]);
-    int ans2;
-    
 
-
-
+    int s = 1000;
+    cout<<s<<" ";
+    for(int i =0;i<n-1;i++){
+        s += x[i];
+        cout<<s<<" ";
+    }
+    cout<<endl;
 }
 int main() {
 //     ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);

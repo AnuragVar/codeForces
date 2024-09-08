@@ -4,25 +4,26 @@ using namespace std;
 #define mod 1000000007
 void solve()
 {
-    int n,k;
-    cin>>n>>k;
-    vector<ll> a(n);
-    
-    for(int i =0;i<n;i++){
-       cin>>a[i];   
-    }
-    ll mine = a[k-1];
-    int i=0;
-    while(i<n && a[i]<=mine){
-        i++;
-    }
-    if(k<=i){
-        cout<<i-1<<endl;
-        return;
-    }
-    cout<<i<<endl;
+    int n;
+    ll d;
+    cin>>n>>d;
 
+    vector<ll> p(n);
+    for(int i =0;i<n;i++) cin>>p[i];
 
+    sort(p.begin(),p.end());
+
+    int i = 0;
+    ll cnt =0;
+    for(int j=n-1;j>=i;j--){
+        int a = ceil((d+1)/(p[j]*1.0));
+        i += a-1;
+        if(i<=j){
+            cnt++;
+        }
+    }
+    cout<<cnt<<endl;
+    return;
 }
 int main() {
 //     ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
@@ -32,7 +33,7 @@ int main() {
 // #endif
 
     ll test=1;
-cin>>test;
+// cin>>test;
     while(test--)
     {
         solve();
