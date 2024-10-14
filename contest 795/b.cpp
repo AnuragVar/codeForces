@@ -74,52 +74,45 @@ int dijkstra(int n, vector<vector<pair<int,int>>> &adj, int source, int destinat
 
 void solve()
 {
-    ll n,p;
-    cin>>n>>p;
+    ll n;
+    cin>>n;
 
-    vector<pair<int,int>> edges(n);
-    for(int i =0;i<n;i++){
-        cin>>edges[i].second; 
+    vector<ll> s(n);
+    for(int i =0;i<n;i++) cin>>s[i];
+    int ele = s[0];
+    int cnt = 1;
+    vector<int> ans(n);
+    int in = 0;
+    for(int i =1;i<n;i++){
+        if(ele==s[i]) cnt++;
+        else{
+            if(cnt<2){
+                cout<<-1<<endl;
+                return;
+            }
+            for(int j =0;j<cnt-1;j++){
+                ans[i-j-1] = i-j-1;
+            }
+            ans[i-cnt] = i;
+            cnt = 1;
+            ele = s[i];
+        }
     }
-
-    for(int i =0;i<n;i++){
-        cin>>edges[i].first;
-    }
-    ll cnt = n;
-    ll sum = 0;
-    cnt--;
-    sum+=p;
-    if(n==0)
-    {
-        cout<<sum<<endl;
+    if(cnt<2){
+        cout<<-1<<endl;
         return;
     }
-    sort(edges.begin(),edges.end());
-    if(p<=edges[0].first){
-        cout<<1ll*p*n<<endl;
-        return;
+    for(int j =0;j<cnt-1;j++){
+        ans[n-j-1] = n-j-1;
     }
-    int i = 0;
-    while(edges[i].first<p && cnt>0 && i<n){
-        int currw = edges[i].first;
-        int currn = edges[i].second;
-        if(currn>cnt){
-            sum += cnt*currw;
-            cout<<sum<<endl;
-            return;
-        } 
-        sum += currn*currw;
-        cnt -=currn;
-        i++;
-    }
-    if(cnt) sum += cnt*p;
-    cout<<sum<<endl;
+    ans[n-cnt] = n;
+    for(int i=0;i<n;i++)cout<<ans[i]<<" ";
+    cout<<endl;
     return;
-
 }
 
 int main() {
-
+    
     ll test=1;
 cin>>test;
     while(test--)

@@ -74,52 +74,31 @@ int dijkstra(int n, vector<vector<pair<int,int>>> &adj, int source, int destinat
 
 void solve()
 {
-    ll n,p;
-    cin>>n>>p;
+    ll n;
+    cin>>n;
 
-    vector<pair<int,int>> edges(n);
-    for(int i =0;i<n;i++){
-        cin>>edges[i].second; 
-    }
+    vector<int> a(n);
+    for(int i =0;i<n;i++) cin>>a[i];
 
-    for(int i =0;i<n;i++){
-        cin>>edges[i].first;
+    int maxsofar = *max_element(a.begin(),a.end());
+    int sofar = a[0];
+    if(a[0]<0) sofar = 0;
+    for(int i =1 ;i<n;i++){
+        //if parity is not same then will continue taking sum from this point
+        if(((a[i-1]&1)==(a[i]&1))){
+            sofar = a[i];
+        }else{
+            sofar += a[i];
+            maxsofar = max(maxsofar,sofar);
+        }
+        if(sofar<0) sofar = 0;
     }
-    ll cnt = n;
-    ll sum = 0;
-    cnt--;
-    sum+=p;
-    if(n==0)
-    {
-        cout<<sum<<endl;
-        return;
-    }
-    sort(edges.begin(),edges.end());
-    if(p<=edges[0].first){
-        cout<<1ll*p*n<<endl;
-        return;
-    }
-    int i = 0;
-    while(edges[i].first<p && cnt>0 && i<n){
-        int currw = edges[i].first;
-        int currn = edges[i].second;
-        if(currn>cnt){
-            sum += cnt*currw;
-            cout<<sum<<endl;
-            return;
-        } 
-        sum += currn*currw;
-        cnt -=currn;
-        i++;
-    }
-    if(cnt) sum += cnt*p;
-    cout<<sum<<endl;
-    return;
-
+    
+    cout<<maxsofar<<endl;
 }
 
 int main() {
-
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
     ll test=1;
 cin>>test;
     while(test--)

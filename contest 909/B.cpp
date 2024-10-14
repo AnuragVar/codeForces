@@ -71,57 +71,48 @@ int dijkstra(int n, vector<vector<pair<int,int>>> &adj, int source, int destinat
     }
     return dis[destination];
 }
-
+ll check(ll no,vector<ll> &a){
+    ll maxi = LONG_LONG_MIN;
+    ll mini = LONG_LONG_MAX;
+    int cnt = 0;
+    ll sum = 0;
+    for(int i =0;i<a.size();i++){
+        cnt++;
+        sum += a[i];
+        if(cnt==no){
+            // cout<<sum<<" ";
+            cnt = 0;
+            maxi = max(maxi,sum);mini = min(mini,sum);
+            sum = 0;
+        }
+    }
+    // cout<<endl;
+    return maxi-mini;
+}
 void solve()
 {
-    ll n,p;
-    cin>>n>>p;
+    int n;
+    cin>>n;
 
-    vector<pair<int,int>> edges(n);
-    for(int i =0;i<n;i++){
-        cin>>edges[i].second; 
-    }
+    vector<ll> a(n);
+    for(int i =0;i<n;i++) cin>>a[i];
+    ll ans = 0;
+    for(int i = 1;i*i<=n;i++){
+        if(!(n%i)){
+            ans = max(ans,check(i,a));
+            if (i * i != n) {
+                ans = max(ans,check(n/i,a));
+            }
 
-    for(int i =0;i<n;i++){
-        cin>>edges[i].first;
+        }
     }
-    ll cnt = n;
-    ll sum = 0;
-    cnt--;
-    sum+=p;
-    if(n==0)
-    {
-        cout<<sum<<endl;
-        return;
-    }
-    sort(edges.begin(),edges.end());
-    if(p<=edges[0].first){
-        cout<<1ll*p*n<<endl;
-        return;
-    }
-    int i = 0;
-    while(edges[i].first<p && cnt>0 && i<n){
-        int currw = edges[i].first;
-        int currn = edges[i].second;
-        if(currn>cnt){
-            sum += cnt*currw;
-            cout<<sum<<endl;
-            return;
-        } 
-        sum += currn*currw;
-        cnt -=currn;
-        i++;
-    }
-    if(cnt) sum += cnt*p;
-    cout<<sum<<endl;
-    return;
-
+    cout<<ans<<endl;
 }
 
 int main() {
-
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
     ll test=1;
-cin>>test;
+    cin>>test;
     while(test--)
     {
         solve();

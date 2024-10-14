@@ -74,54 +74,48 @@ int dijkstra(int n, vector<vector<pair<int,int>>> &adj, int source, int destinat
 
 void solve()
 {
-    ll n,p;
-    cin>>n>>p;
+    ll n;
+    cin>>n;
 
-    vector<pair<int,int>> edges(n);
-    for(int i =0;i<n;i++){
-        cin>>edges[i].second; 
-    }
+    vector<ll> sum(n+1,0);
 
-    for(int i =0;i<n;i++){
-        cin>>edges[i].first;
-    }
-    ll cnt = n;
-    ll sum = 0;
-    cnt--;
-    sum+=p;
-    if(n==0)
-    {
-        cout<<sum<<endl;
-        return;
-    }
-    sort(edges.begin(),edges.end());
-    if(p<=edges[0].first){
-        cout<<1ll*p*n<<endl;
-        return;
-    }
-    int i = 0;
-    while(edges[i].first<p && cnt>0 && i<n){
-        int currw = edges[i].first;
-        int currn = edges[i].second;
-        if(currn>cnt){
-            sum += cnt*currw;
-            cout<<sum<<endl;
-            return;
-        } 
-        sum += currn*currw;
-        cnt -=currn;
-        i++;
-    }
-    if(cnt) sum += cnt*p;
-    cout<<sum<<endl;
-    return;
+    vector<pair<ll,int>> a(n+1);
+    vector<int> next(n+1);
 
+    for(int i =1;i<=n;i++){
+        int x;
+        cin>>x;
+        a[i].first = x;
+        a[i].second = i;
+    }
+    vector<ll> ans(n+1);
+    sort(a.begin()+1,a.end());
+    for(int i =1;i<=n;i++){
+        if(next[i - 1] >= i){
+                next[i] = next[i - 1];
+                sum[i] = sum[i - 1];
+            } else{
+                sum[i] += sum[i-1]+a[i].first;
+                next[i] = i;
+                while((next[i]+1<=n) && (sum[i]>=a[next[i]+1].first)){
+                    next[i]++;
+                    sum[i] += a[next[i]].first;
+                }
+            }
+    }
+    for(int i =1;i<=n;i++){
+        ans[a[i].second] = next[i]-1;
+    }
+    for(int i =1;i<=n;i++){
+        cout<<ans[i]<<" ";
+    }
+    cout<<endl;
 }
 
 int main() {
-
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
     ll test=1;
-cin>>test;
+    cin>>test;
     while(test--)
     {
         solve();

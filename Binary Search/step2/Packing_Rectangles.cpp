@@ -72,56 +72,38 @@ int dijkstra(int n, vector<vector<pair<int,int>>> &adj, int source, int destinat
     return dis[destination];
 }
 
+    ll w,h,n;
+bool check(ll mid){
+    return (mid/w)*(mid/h)>=n;
+}
+
 void solve()
 {
-    ll n,p;
-    cin>>n>>p;
+    cin>>w>>h>>n;
 
-    vector<pair<int,int>> edges(n);
-    for(int i =0;i<n;i++){
-        cin>>edges[i].second; 
-    }
+    ll low = 0;
+    ll high = 1;
+    while(!check(high))high *=2;
 
-    for(int i =0;i<n;i++){
-        cin>>edges[i].first;
+    while(low<=high){
+        ll mid = low + (high-low)/2;
+        if(check(mid)){
+            high = mid-1;
+        }
+        else low = mid+1;
     }
-    ll cnt = n;
-    ll sum = 0;
-    cnt--;
-    sum+=p;
-    if(n==0)
-    {
-        cout<<sum<<endl;
-        return;
-    }
-    sort(edges.begin(),edges.end());
-    if(p<=edges[0].first){
-        cout<<1ll*p*n<<endl;
-        return;
-    }
-    int i = 0;
-    while(edges[i].first<p && cnt>0 && i<n){
-        int currw = edges[i].first;
-        int currn = edges[i].second;
-        if(currn>cnt){
-            sum += cnt*currw;
-            cout<<sum<<endl;
-            return;
-        } 
-        sum += currn*currw;
-        cnt -=currn;
-        i++;
-    }
-    if(cnt) sum += cnt*p;
-    cout<<sum<<endl;
-    return;
-
+    cout<<low<<endl;
 }
 
 int main() {
+//     ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+// #ifndef ONLINE_JUDGE
+//     freopen("input.txt", "r", stdin);
+//     freopen("output.txt", "w", stdout);
+// #endif
 
     ll test=1;
-cin>>test;
+//cin>>test;
     while(test--)
     {
         solve();

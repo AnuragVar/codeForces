@@ -74,51 +74,48 @@ int dijkstra(int n, vector<vector<pair<int,int>>> &adj, int source, int destinat
 
 void solve()
 {
-    ll n,p;
-    cin>>n>>p;
+    ll n,k;
+    cin>>n>>k;
 
-    vector<pair<int,int>> edges(n);
-    for(int i =0;i<n;i++){
-        cin>>edges[i].second; 
-    }
+    string s;
+    cin>>s;
+    int blackCnt = 0;
+    int need = 0;
+    int ans = INT_MAX;
 
-    for(int i =0;i<n;i++){
-        cin>>edges[i].first;
+    int i =0,j=0;
+    while(j<n){
+        if(s[j]=='W'){
+            need++;
+        }
+        else if(s[j] == 'B'){
+            blackCnt++;
+        }
+        while(blackCnt+need>=k){
+            ans = min(ans,need);
+            if(s[i]=='W') need--;
+            else blackCnt--;
+            i++;
+        }
+        j++;
     }
-    ll cnt = n;
-    ll sum = 0;
-    cnt--;
-    sum+=p;
-    if(n==0)
-    {
-        cout<<sum<<endl;
-        return;
-    }
-    sort(edges.begin(),edges.end());
-    if(p<=edges[0].first){
-        cout<<1ll*p*n<<endl;
-        return;
-    }
-    int i = 0;
-    while(edges[i].first<p && cnt>0 && i<n){
-        int currw = edges[i].first;
-        int currn = edges[i].second;
-        if(currn>cnt){
-            sum += cnt*currw;
-            cout<<sum<<endl;
-            return;
-        } 
-        sum += currn*currw;
-        cnt -=currn;
+    while(blackCnt+need>=k){
+        ans = min(ans,need);
+        if(s[i]=='W') need--;
+        else blackCnt--;
         i++;
     }
-    if(cnt) sum += cnt*p;
-    cout<<sum<<endl;
-    return;
 
+    cout<<ans<<endl;
+    return;
 }
 
 int main() {
+//     ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+// #ifndef ONLINE_JUDGE
+//     freopen("input.txt", "r", stdin);
+//     freopen("output.txt", "w", stdout);
+// #endif
 
     ll test=1;
 cin>>test;

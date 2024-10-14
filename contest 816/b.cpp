@@ -4,16 +4,30 @@ using namespace std;
 #define mod 1000000007
 void solve()
 {
-    int n;
-    ll k,b,s;
+    
+    ll n,k,b,s;
     cin>>n>>k>>b>>s;
 
-    if(k*b>s){
-        cout<<-1<<endl;
+    vector<ll> ans(n,0);
+    ans[0] = k*b;
+    s-=k*b;
+    if(s<0) {
+        cout<<"-1\n";
         return;
     }
-    
-
+    for(int i =0;i<n;i++){
+        int ele = min(k-1,s);
+        ans[i] += ele;
+        s -= ele;
+    }
+    if(s>0) {
+        cout<<"-1\n";
+        return;
+    }
+    for(int i =0;i<n;i++){
+        cout<<ans[i]<<" ";
+    }
+    cout<<endl;
 }
 int main() {
 //     ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
