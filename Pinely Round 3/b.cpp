@@ -76,44 +76,29 @@ void solve()
 {
     int n;
     cin>>n;
-    vector<pair<ll,int>> a(n);
-    vector<pair<ll,int>> b(n);
-    vector<pair<ll,int>> c(n);
-
-    for(int i = 0;i<n;i++) {
-        ll x;
-        cin>>x;
-        a[i].first=x;
-        a[i].second = i;
-    }
-    for(int i = 0;i<n;i++) {
-        ll x;
-        cin>>x;
-        b[i].first=x;
-        b[i].second = i;
-    }
-    for(int i = 0;i<n;i++) {
-        ll x;
-        cin>>x;
-        c[i].first=x;
-        c[i].second = i;
-    }
-
-    sort(a.begin(),a.end(),greater<pair<ll,int>>());
-    sort(b.begin(),b.end(),greater<pair<ll,int>>());
-    sort(c.begin(),c.end(),greater<pair<ll,int>>());
+    vector<ll> a(n);
+    
+    for(int i = 0;i<n;i++) cin>>a[i];
      
-    ll ans = 0;
-    for(int i = 0;i<3 && i<a.size();i++){
-        for(int j = 0;j<3 && j<b.size();j++){
-            for(int k = 0;k<3 && k<c.size();k++){
-                if(a[i].second!=b[j].second && b[j].second!=c[k].second && c[k].second != a[i].second){
-                    ans = max(ans,a[i].first + b[j].first + c[k].first);
-                }
+    int parity = (a[0]&1);
+    for(int i = 1;i<n;i++){
+        if((a[i]&1)!=parity){
+            cout<<2<<endl;
+            return;
+        }
+    }
+    
+    for(int i = 2;i<=57;i++){
+        ll no = pow(2,i);
+        ll parity = (a[0]%no);
+        for(int i = 1;i<n;i++){
+            if((a[i]%no)!=parity){
+                cout<<no<<endl;
+                return;
             }
         }
     }
-    cout<<ans<<endl;
+
     
 }
 
