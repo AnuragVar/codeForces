@@ -76,35 +76,49 @@ void solve()
 {
     ll n;
     cin>>n;
+
     vector<ll> a(n);
-
-    for(int i = 0 ;i<n;i++) cin>>a[i];
-
-    ll q;
-    cin>>q;
-    vector<pair<ll,ll>> queries(q);
-    for(int i = 0;i<q;i++) {
-        cin>>queries[i].first;
-        cin>>queries[i].second;
+    for(int i = 0;i<n;i++) {
+        cin>>a[i];
     }
 
-    //solution
-    vector<ll> ans(n);
-    ans[0] = -1;
-    for(int i = 1;i<n;i++){
-        if(a[i]!=a[i-1]) ans[i] = i;
-        else ans[i] = ans[i-1];
-    }
-    // for(int i = 0;i<n;i++) cout<<ans[i]<<endl;
+    n = unique(a.begin(),a.end())-a.begin();
 
-    for(int i = 0 ;i<q;i++){
-        ll l = queries[i].first;
-        ll r = queries[i].second-1;
-        if(ans[r]>=l){
-            cout<<ans[r]<<" "<<r+1<<endl;
-        }
-        else cout<<-1<<" "<<-1<<endl;
+    int ans = n;
+    for(int i = 1;i<n-1;i++){
+        if((a[i]>a[i-1] && a[i]<a[i+1]) || (a[i]<a[i-1] && a[i]>a[i+1])) ans--;
     }
+    cout<<ans<<endl;
+    // if(n==1 || !done) {
+    //     cout<<1<<endl;
+    //     return;
+    // }
+
+    // // if(a[0]==a[n-1]){
+    // //     if(accumulate(a.begin(),a.end(),0*1ll)==n){
+    // //         cout<<1<<endl;
+    // //         return;
+    // //     }
+    // // }
+    
+    // int inc = 0;
+    // int cnt = 1;
+    // if(a[1]>=a[0]) inc = 1;
+
+    // for(int i = 2;i<n;i++){
+    //     if(a[i]>=a[i-1] && inc) {
+    //         continue;
+    //     }
+    //     else if(a[i]<=a[i-1] && !inc) {
+    //         continue;
+    //     }
+    //     else{
+    //         cnt++;
+    //         inc = !inc;
+    //     }
+    // }
+    // cout<<cnt+1<<endl;
+    // return;     
 }
 
 int main() {

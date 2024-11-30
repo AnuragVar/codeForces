@@ -76,35 +76,41 @@ void solve()
 {
     ll n;
     cin>>n;
+
     vector<ll> a(n);
 
     for(int i = 0 ;i<n;i++) cin>>a[i];
-
-    ll q;
-    cin>>q;
-    vector<pair<ll,ll>> queries(q);
-    for(int i = 0;i<q;i++) {
-        cin>>queries[i].first;
-        cin>>queries[i].second;
-    }
-
-    //solution
-    vector<ll> ans(n);
-    ans[0] = -1;
-    for(int i = 1;i<n;i++){
-        if(a[i]!=a[i-1]) ans[i] = i;
-        else ans[i] = ans[i-1];
-    }
-    // for(int i = 0;i<n;i++) cout<<ans[i]<<endl;
-
-    for(int i = 0 ;i<q;i++){
-        ll l = queries[i].first;
-        ll r = queries[i].second-1;
-        if(ans[r]>=l){
-            cout<<ans[r]<<" "<<r+1<<endl;
+    int mi = 1;
+    int ma = n;
+    int i = 0;
+    int j = n-1;
+    while(i<=j){
+        if(a[i]==mi){
+            i++;
+            mi++;
         }
-        else cout<<-1<<" "<<-1<<endl;
+        else if(a[i]==ma){
+            i++;
+            ma--;
+        }
+        else if(a[j]==mi){
+            j--;
+            mi++;
+        }
+        else if(a[j]==ma){
+            j--;
+            ma--;
+        }
+        else{
+            break;
+        }
     }
+    if(i<=j){
+        cout<<i+1<<" "<<j+1<<endl;
+        return;
+    }
+    cout<<-1<<endl;
+    return;
 }
 
 int main() {

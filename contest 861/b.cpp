@@ -74,39 +74,28 @@ int dijkstra(int n, vector<vector<pair<int,int>>> &adj, int source, int destinat
 
 void solve()
 {
-    ll n;
-    cin>>n;
-    vector<ll> a(n);
+    ll n,m;
+    cin>>n>>m;
 
-    for(int i = 0 ;i<n;i++) cin>>a[i];
-
-    ll q;
-    cin>>q;
-    vector<pair<ll,ll>> queries(q);
-    for(int i = 0;i<q;i++) {
-        cin>>queries[i].first;
-        cin>>queries[i].second;
-    }
-
-    //solution
-    vector<ll> ans(n);
-    ans[0] = -1;
-    for(int i = 1;i<n;i++){
-        if(a[i]!=a[i-1]) ans[i] = i;
-        else ans[i] = ans[i-1];
-    }
-    // for(int i = 0;i<n;i++) cout<<ans[i]<<endl;
-
-    for(int i = 0 ;i<q;i++){
-        ll l = queries[i].first;
-        ll r = queries[i].second-1;
-        if(ans[r]>=l){
-            cout<<ans[r]<<" "<<r+1<<endl;
+    vector<vector<ll>> c(m,vector<ll>(n));
+    for(int i = 0;i<n;i++){
+        for(int j = 0;j<m;j++){
+            cin>>c[j][i];
         }
-        else cout<<-1<<" "<<-1<<endl;
     }
+    for(int i = 0;i<m;i++){
+        sort(c[i].begin(),c[i].end());
+    }
+    ll ans = 0;
+    for(int i =0;i<m;i++){
+        ll sum = 0;
+        for(int j = 0;j<n;j++){
+            ans += c[i][j]*j-sum;
+            sum += c[i][j];
+        }
+    }
+    cout<<ans<<endl;
 }
-
 int main() {
     ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
     ll test=1;

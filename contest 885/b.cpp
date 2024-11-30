@@ -72,22 +72,49 @@ int dijkstra(int n, vector<vector<pair<int,int>>> &adj, int source, int destinat
     return dis[destination];
 }
 
-void solve()
-{
-    int n,k;
-    cin>>n>>k;
-    vector<int> c(k);
-    for(int i = 0;i<k;i++) cin>>c[i];
+#include <bits/stdc++.h>
+using namespace std;
 
-    int i = 0,e = 
+
+
+void solve() {
+    int n, k;
+    cin >> n >> k;
+    vector<int> c(n);
+    for (int i = 0; i < n; i++) cin >> c[i];
+    vector<int> last(k,-1);
+    vector<int> maxi(k),secmaxi(k);
+    // for(int color = 1;color<=k;color++){
+    for(int in = 0;in<n;in++){
+        int step = in - last[c[in]-1]-1;
+        if(maxi[c[in]-1]<=step) {
+            secmaxi[c[in]-1] = maxi[c[in]-1];
+            maxi[c[in]-1] = step;
+        }
+        else if(secmaxi[c[in]-1]<=step) secmaxi[c[in]-1] = step;
+        last[c[in]-1] = in;
+    }
+    for(int in =0;in<k;in++){
+        int step = n-last[in]-1;
+        if(maxi[in]<=step) {
+            secmaxi[in] = maxi[in];
+            maxi[in] = step;
+        }
+        else if(secmaxi[in]<=step) secmaxi[in] = step;
+    }
+    int ans = 1e9;
+    for(int in = 0;in<k;in++){
+        ans = min(ans,max(maxi[in]/2,secmaxi[in]));
+    }
+    cout<<ans<<endl;
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
-    ll test=1;
-cin>>test;
-    while(test--)
-    {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    cin >> t;
+    while (t--) {
         solve();
     }
     return 0;
